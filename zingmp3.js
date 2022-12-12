@@ -52,9 +52,12 @@ class ZingMp3Api {
         return this.getHmac512(path +
             this.getHash256(`count=${count}ctime=${this.CTIME}page=${page}type=${type}version=${this.VERSION}`), this.SECRET_KEY);
     }
+    hashListSong(path, id, type, page, count) {
+        return this.getHmac512(path +
+            this.getHash256(`count=${count}ctime=${this.CTIME}id=${id}page=${page}type=${type}version=${this.VERSION}`), this.SECRET_KEY);
+    }
     hashSuggest(path) {
         return this.getHmac512(path + this.getHash256(`ctime=${this.CTIME}version=${this.VERSION}`), this.SECRET_KEY);
-
     }
     getCookie() {
         return new Promise((resolve, rejects) => {
@@ -210,6 +213,32 @@ class ZingMp3Api {
             this.requestZingMp3("/api/v2/song/get/info", {
                 id: songId,
                 sig: this.hashParam("/api/v2/song/get/info", songId)
+            })
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    rejects(err);
+                });
+        });
+    }
+    // getListSong
+    getListSong(artistId, page, count) {
+        return new Promise((resolve, rejects) => {
+            this.requestZingMp3("/api/v2/song/get/list", {
+                // id: artistId,
+                // type: "artist",
+                // page: page,
+                // count: count,
+                // sort: "listen",
+                // sectionId: "aSong",
+                // sig: this.hashListMV("/api/v2/song/get/list", artistId)
+                id: artistId,
+                type: "artist",
+                page: page,
+                count: count,
+                sort: "listen",
+                sig: this.hashListSong("/api/v2/song/get/list", artistId, "artist", page, count),
             })
                 .then((res) => {
                     resolve(res);

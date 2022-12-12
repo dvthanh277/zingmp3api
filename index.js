@@ -37,6 +37,14 @@ app.get('/ooms-api/artist', (req, res) => {
         return res.send(data)
     })
 })
+app.get('/ooms-api/getListSong', (req, res) => {
+    const id = req.query.id
+    const page = req.query.page
+    const count = req.query.count
+    ZingMp3.getListSong(id, page, count).then((data) => {
+        return res.send(data)
+    })
+})
 // "ZWDF7UEF"
 
 
