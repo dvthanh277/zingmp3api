@@ -45,6 +45,13 @@ app.get('/ooms-api/getListSong', (req, res) => {
         return res.send(data)
     })
 })
+
+app.get('/ooms-api/recommendSong', (req, res) => {
+    const id = req.query.id;
+    ZingMp3.getRecommendSong(id).then((data) => {
+        return res.send(data)
+    })
+})
 // "ZWDF7UEF"
 
 

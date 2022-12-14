@@ -226,19 +226,27 @@ class ZingMp3Api {
     getListSong(artistId, page, count) {
         return new Promise((resolve, rejects) => {
             this.requestZingMp3("/api/v2/song/get/list", {
-                // id: artistId,
-                // type: "artist",
-                // page: page,
-                // count: count,
-                // sort: "listen",
-                // sectionId: "aSong",
-                // sig: this.hashListMV("/api/v2/song/get/list", artistId)
                 id: artistId,
                 type: "artist",
                 page: page,
                 count: count,
                 sort: "listen",
                 sig: this.hashListSong("/api/v2/song/get/list", artistId, "artist", page, count),
+            })
+                .then((res) => {
+                    resolve(res);
+                })
+                .catch((err) => {
+                    rejects(err);
+                });
+        });
+    }
+    // getRecommendSong
+    getRecommendSong(songId) {
+        return new Promise((resolve, rejects) => {
+            this.requestZingMp3("/api/v2/recommend/get/songs", {
+                id: songId,
+                sig: this.hashParam("/api/v2/recommend/get/songs", songId)
             })
                 .then((res) => {
                     resolve(res);
