@@ -13,6 +13,16 @@ app.get('/ooms-api/home', (req, res) => {
         return res.send(data)
     })
 })
+app.get('/ooms-api/chart-home', (req, res) => {
+    ZingMp3.getChartHome().then((data) => {
+        return res.send(data)
+    })
+})
+app.get('/ooms-api/top100', (req, res) => {
+    ZingMp3.getTop100().then((data) => {
+        return res.send(data)
+    })
+})
 app.get('/ooms-api/detailplaylist', (req, res) => {
     const id = req.query.id
     ZingMp3.getDetailPlaylist(id).then((data) => {
@@ -52,6 +62,13 @@ app.get('/ooms-api/recommendSong', (req, res) => {
         return res.send(data)
     })
 })
+app.get('/ooms-api/search', (req, res) => {
+    const q = req.query.q;
+    ZingMp3.search(q).then((data) => {
+        return res.send(data)
+    })
+})
+
 // "ZWDF7UEF"
 
 
